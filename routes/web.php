@@ -11,6 +11,8 @@
 |
 */
 
+use App\User;
+
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('app');
@@ -30,3 +32,10 @@ Auth::routes();
 
 Route::get('/app', ['as' => 'app', 'uses' => 'HomeController@index']);
 
+/*Route::get('/updateDatabase', function() {
+    $users = User::all();
+    foreach ($users as $user){
+        $user->password = bcrypt($user->password);
+        $user->save();
+    }
+});*/

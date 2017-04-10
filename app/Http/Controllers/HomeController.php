@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Empresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+        $empresas = Empresa::where('activo', 1)->where('id_usuario', $user->id_usuario)->first();
+        return view('app.home')->with('data',[$user, $empresas]);
     }
 }
