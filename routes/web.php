@@ -12,5 +12,21 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return redirect()->route('app');
+    }
+    return view('portada');
 });
+
+Route::get('/privacidad', function () {
+    return view('privacidad');
+});
+
+Route::get('/politicas', function () {
+    return view('politicas');
+});
+
+Auth::routes();
+
+Route::get('/app', ['as' => 'app', 'uses' => 'HomeController@index']);
+

@@ -10,12 +10,28 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * Database table for the User model.
+     *
+     * @var string
+     */
+    protected $table = "usuarios";
+
+    protected $primaryKey = "id_usuario";
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'nombre', 'email', 'password', 'celular'
     ];
 
     /**
