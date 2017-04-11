@@ -87,61 +87,77 @@
         ]) !!};
 </script>
 <body>
-<div id="app">
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md">
+<!-- BEGIN HEADER -->
 
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                {{ Auth::user()->nombre }} <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                          style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                </ul>
+<div class="page-header navbar navbar-fixed-top">
+    <!-- BEGIN HEADER INNER -->
+    <div class="page-header-inner ">
+        <!-- BEGIN LOGO -->
+        <div class="page-logo">
+            <a href="index.php">
+                <img src="logo.png" width="130" alt="logo" class="logo-default"/> </a>
+            <div class="menu-toggler sidebar-toggler">
+                <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
             </div>
         </div>
-    </nav>
+        <!-- END LOGO -->
+        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse"
+           data-target=".navbar-collapse"> </a>
+        <!-- END RESPONSIVE MENU TOGGLER -->
+        <!-- BEGIN PAGE ACTIONS -->
+        <!-- DOC: Remove "hide" class to enable the page header actions -->
+        <div class="page-actions hidden-xs">
+            @if($usuario->empresas)
+
+                <div class="btn-group">
+                    <button type="button" data-log="7" class="log btn blue dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false">
+                        <i class="fa fa-refresh"></i>
+                        <span class="hidden-sm hidden-xs">Cambiar Empresa</span>
+                        <i class="fa fa-angle-down"></i>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        @if(count($usuario->empresas) > 1)
+                            @foreach($usuario->empresas as $empresa)
+                                <li>
+                                    <a href="javascript:;" onclick="cambiaRFC({{$empresa->id_empresa}})">
+                                        @if($empresa->id_empresa==\Illuminate\Support\Facades\Session::get('empresa')->id_empresa)
+                                            <i class="fa fa-check"></i>
+                                        @endif
+                                        {{ str_limit($empresa->razon_social,33,"...") }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        @else
+                            <li>
+                                <a href="javascript:;" onclick="cambiaRFC({{$usuario->empresas->id_empresa}})">
+                                    @if($usuario->empresas->id_empresa==\Illuminate\Support\Facades\Session::get('empresa')->id_empresa)
+                                        <i class="fa fa-check"></i>
+                                    @endif
+                                    {{ str_limit($usuario->empresas->razon_social,33,"...") }}
+                                </a>
+                            </li>
+                        @endif
+                        <li role="separator" class="divider"></li>
+                        <!-- PEGAR VIP -->
+                    </ul>
+                </div>
+            @else
+                <h4>"Bienvenido " {{ucwords(mb_strtolower($s_nombre))}}</h4>
+            @endif
+        </div>
+        <!-- END PAGE ACTIONS -->
+        <!-- BEGIN PAGE TOP -->
+        <!-- PEGAR CONTENIDO -->
+        <!-- END PAGE TOP -->
+    </div>
+    <!-- END HEADER INNER -->
+</div>
 
 
-    @yield('content')
+@yield('content')
 </div>
 
 <!-- Scripts -->

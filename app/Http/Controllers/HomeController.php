@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Empresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,8 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $empresas = Empresa::where('activo', 1)->where('id_usuario', $user->id_usuario)->first();
-        return view('app.home')->with('data',[$user, $empresas]);
+        if (!Session::has('empresa')) Session::put('empresa', $user->empresas->first());
+        //dd($user->empresas);
+        return view('app.home')->with("usuario", $user);
     }
 }

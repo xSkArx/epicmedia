@@ -243,7 +243,7 @@ $menu = isset($_GET['Menu']) ? $_GET['Menu'] : NULL; ?>
                         <div class="form-group">
 
                             <div class="group">
-                                <input type="text" name="email" id="email" title=" " autocomplete="off" maxlength="128"
+                                <input type="email" name="email" id="email" title=" " autocomplete="off" maxlength="128"
                                        required>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
@@ -307,7 +307,7 @@ $menu = isset($_GET['Menu']) ? $_GET['Menu'] : NULL; ?>
                         <div class="form-group">
 
                             <div class="group">
-                                <input type="text" autocomplete="off" name="email" id="login_email" title=" " required>
+                                <input type="email" autocomplete="off" name="email" id="login_email" title=" " required>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
                                 <label>Email</label>
@@ -358,7 +358,7 @@ $menu = isset($_GET['Menu']) ? $_GET['Menu'] : NULL; ?>
                         <div class="form-group">
 
                             <div class="group" id="grupo_pass">
-                                <input type="text" name="email" autocomplete="off" id="pass_email" title=" "
+                                <input type="email" name="email" autocomplete="off" id="pass_email" title=" "
                                        required>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
@@ -387,6 +387,10 @@ $menu = isset($_GET['Menu']) ? $_GET['Menu'] : NULL; ?>
 </div>
 <!-- /#page -->
 <script>
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
     $(function () {
         $('.cerrar').click(function () {
             $.magnificPopup.close();
@@ -472,8 +476,8 @@ $menu = isset($_GET['Menu']) ? $_GET['Menu'] : NULL; ?>
             return false;
         }
 
-        if (!email) {
-            $('#msg_data').html('Es necesario que escriba su dirección de E-mail.');
+        if (!isEmail(email)) {
+            $('#msg_data').html('Es necesario que escriba una direccón de E-mail válida.');
             $('#msg_data').show();
             $('#email').focus();
             return false;
@@ -535,9 +539,11 @@ $menu = isset($_GET['Menu']) ? $_GET['Menu'] : NULL; ?>
          });*/
         $('.btn-login').hide();
         $('#load_login').show();
-        setTimeout(1000, function () {
-            el.submit();
-        })
+        if (isEmail($("#login_email").val())) {
+            setTimeout(1000, function () {
+                el.submit();
+            });
+        }
 
     }
 
@@ -545,9 +551,11 @@ $menu = isset($_GET['Menu']) ? $_GET['Menu'] : NULL; ?>
 
         $('.btn-pass').hide();
         $('#load_pass').show();
-        setTimeout(1000, function () {
-            el.submit();
-        })
+        if (isEmail($("#pass_email").val())) {
+            setTimeout(1000, function () {
+                el.submit();
+            });
+        }
     }
 </script>
 <!-- JavaScript -->
