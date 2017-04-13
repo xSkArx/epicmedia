@@ -29,9 +29,11 @@ Route::get('/politicas', function () {
 });
 
 Auth::routes();
+Route::group(['prefix' => 'app'], function () {
 
-Route::get('/app', ['as' => 'app', 'uses' => 'HomeController@index']);
+    Route::get('/', ['as' => 'app', 'uses' => 'HomeController@index']);
 
+});
 /*Route::get('/updateDatabase', function() {
     $users = User::all();
     foreach ($users as $user){

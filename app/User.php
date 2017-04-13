@@ -9,6 +9,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const CREATED_AT = 'fecha_registro';
+
     /**
      * Database table for the User model.
      *
@@ -17,13 +19,6 @@ class User extends Authenticatable
     protected $table = "usuarios";
 
     protected $primaryKey = "id_usuario";
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -43,7 +38,19 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function empresas() {
-         return $this->hasMany('App\Empresa', 'id_usuario');
+    public function empresas()
+    {
+        $empresas = $this->hasMany('App\Empresa', 'id_usuario');
+
+        return $empresas;
+    }
+
+    public function paquete()
+    {
+        return $this->belongsTo('App\Paquete', 'id_paquete');
+    }
+
+    public function hasEmpresas(){
+        return (bool)$this->empresas();
     }
 }

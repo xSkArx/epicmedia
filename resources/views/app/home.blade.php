@@ -1,17 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Dashboard</div>
-
-                    <div class="panel-body">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @if(!\Illuminate\Support\Facades\Session::get('empresa')->primera_descarga)
+        @if(!\Illuminate\Support\Facades\Session::get('empresa')->vip)
+            @include('app.note_block')
+        @endif
+    @endif
 @endsection
