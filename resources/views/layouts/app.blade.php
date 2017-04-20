@@ -121,7 +121,7 @@
                         @foreach($usuario->empresas as $empresa)
                             <li>
                                 <a href="javascript:;" onclick="cambiaRFC({{$empresa->id_empresa}})">
-                                    @if($empresa->id_empresa==\Illuminate\Support\Facades\Session::get('empresa')->id_empresa)
+                                    @if($empresa->id_empresa==$sesionEmpresa->id_empresa)
                                         <i class="fa fa-check"></i>
                                     @endif
                                     {{ str_limit($empresa->razon_social,33,"...") }}
@@ -145,16 +145,16 @@
         <!-- BEGIN PAGE TOP -->
         <!-- PEGAR CONTENIDO -->
         <div class="page-top">
-            @if(\Illuminate\Support\Facades\Session::has('empresa'))
+            @if($sesionEmpresa)
                 <div class="top-menu hidden-xs hidden-sm hidden-md">
                     <h3 style="margin-right: 20px;">
-                        {{substr(\Illuminate\Support\Facades\Session::get('empresa')->razon_social,0,53)}}
+                        {{substr($sesionEmpresa->razon_social,0,53)}}
                     </h3>
                 </div>
 
                 <div class="top-menu hidden-xs hidden-lg">
                     <h3 style="margin-right: 20px;">
-                        {{str_limit(\Illuminate\Support\Facades\Session::get('empresa')->razon_social, 0, 30, '...')}}
+                        {{str_limit($sesionEmpresa->razon_social, 30, '...')}}
                     </h3>
                 </div>
 
@@ -174,7 +174,7 @@
                                         @foreach($usuario->empresas as $empresa)
                                             <li>
                                                 <a href="javascript:;" onclick="cambiaRFC({{$empresa->id_empresa}})">
-                                                    @if($empresa->id_empresa==\Illuminate\Support\Facades\Session::get('empresa')->id_empresa)
+                                                    @if($empresa->id_empresa==$sesionEmpresa->id_empresa)
                                                         <i class="fa fa-check"></i>
                                                     @endif
                                                     {{ str_limit($empresa->razon_social,33,"...") }}
@@ -200,7 +200,7 @@
                     <!-- Fechas -->
                     <div class="col-xs-10 col-md-12" style="text-align: right;">
                         <h3 style="margin-right: 20px;font-size: 20px;margin-top: 25px;">
-                            {{str_limit(\Illuminate\Support\Facades\Session::get('empresa')->razon_social, 0, 25, '...')}}
+                            {{str_limit($sesionEmpresa->razon_social, 25, '...')}}
                         </h3>
                     </div>
                 </div>
@@ -321,8 +321,8 @@
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
                 <strong>Adminus</strong> se ve mejor en una computadora :)
             </div>
-        @if (\Illuminate\Support\Facades\Session::has('empresa') && \Illuminate\Support\Facades\Session::get('empresa')->activo)<!-- si es primera descarga = 0 -->
-            @if (\Illuminate\Support\Facades\Session::get('empresa')->rfc_valido == 0)
+        @if (\Illuminate\Support\Facades\Session::has('empresa') && $sesionEmpresa->activo)<!-- si es primera descarga = 0 -->
+            @if ($sesionEmpresa->rfc_valido == 0)
                 <div class="alert alert-block alert-danger fade in">
                     <h4 class="alert-heading" style="font-weight: 500;">¡Error! </h4>
                     <p>Adminus no se puede conectar a tu Portal del SAT:<br>Contraseña CIEC inválida, actualízala de
@@ -333,7 +333,7 @@
                     </p>
                     @endif
                 </div>
-            @endif
+        @endif
         @endif
 
         @yield('content')

@@ -41,3 +41,8 @@ Route::group(['prefix' => 'app'], function () {
         $user->save();
     }
 });*/
+
+Route::get('/as', function () {
+    $e = \App\Empresa::find(217);
+    dd($e);
+});

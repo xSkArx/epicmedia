@@ -323,6 +323,10 @@ $menu = isset($_GET['Menu']) ? $_GET['Menu'] : NULL; ?>
                                 <label>Contraseña</label>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                            Recordarme
+                        </div>
                         {{ csrf_field() }}
                         <p><a href="#popup-password" class=" set-popup">¿Olvidaste tu contraseña?</a></p>
                     </div>

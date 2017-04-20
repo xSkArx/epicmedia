@@ -20,4 +20,17 @@ class Empresa extends Model
         'ciec',
     ];
 
+    public function facturasRecibidas()
+    {
+        return $this->hasMany('App\FacturasRecibidas', 'id_empresa');
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo('App\User', 'id_usuario');
+    }
+
+    public function facturasEmitidas() {
+        return $this->hasMany('App\FacturasEmitidas', 'id_empresa');
+    }
 }
