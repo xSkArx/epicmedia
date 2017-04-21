@@ -32,17 +32,7 @@ Auth::routes();
 Route::group(['prefix' => 'app'], function () {
 
     Route::get('/', ['as' => 'app', 'uses' => 'HomeController@index']);
+    Route::post('/', 'HomeController@postIndex');
 
 });
-/*Route::get('/updateDatabase', function() {
-    $users = User::all();
-    foreach ($users as $user){
-        $user->password = bcrypt($user->password);
-        $user->save();
-    }
-});*/
 
-Route::get('/as', function () {
-    $e = \App\Empresa::find(217);
-    dd($e);
-});

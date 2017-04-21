@@ -341,5 +341,11 @@
 
         <!-- Scripts -->
             <script src="{{ asset('js/app.js') }}"></script>
+            <script>
+                function tipoFecha(tipo) {
+                    $('#tipo_fecha').val(tipo);
+                    $('#form_tipo_fecha').submit();
+                }
+            </script>
 </body>
 </html>
