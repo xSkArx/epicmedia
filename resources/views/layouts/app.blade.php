@@ -66,26 +66,26 @@
     <link href="assets/offline/offline-language-spanish.css" rel="stylesheet" type="text/css"/>
     <link rel="shortcut icon" href="favicon.ico"/>
     <script src='//cdn.zarget.com/99132/156573.js'></script>
-</head>
-<script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-<!-- END HEAD -->
-<style>
-    .desactivado {
-        color: #8896a0;
-        font-style: italic;
-        text-decoration: line-through;
-    }
+    <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <!-- END HEAD -->
+    <style>
+        .desactivado {
+            color: #8896a0;
+            font-style: italic;
+            text-decoration: line-through;
+        }
 
-    .mayusculas {
-        text-transform: uppercase;
-    }
-</style>
+        .mayusculas {
+            text-transform: uppercase;
+        }
+    </style>
 
-<script>
-    window.Laravel = {!! json_encode([
+    <script>
+        window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
-</script>
+    </script>
+</head>
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md">
 <!-- BEGIN HEADER -->
 
@@ -333,19 +333,169 @@
                     </p>
                     @endif
                 </div>
-        @endif
-        @endif
+            @endif
+            @endif
 
-        @yield('content')
+            @yield('content')
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<!--[if lt IE 9]>
+<script src="assets/global/plugins/respond.min.js"></script>
+<script src="assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+<script src="assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+        type="text/javascript"></script>
+<script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+
+<!-- -->
+
+<script src="assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/counterup/jquery.waypoints.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/counterup/jquery.counterup.min.js" type="text/javascript"></script>
+
+@if(Route::is('app'))
+    <script src="assets/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
+    <!--script src="chartsxd.js.php" type="text/javascript"></script-->
+@endif
+<script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+
+<script src="assets/jquery.creditCardValidator.js" type="text/javascript"></script>
+<script src="assets/jquery.alphanum.js" type="text/javascript"></script>
+<script src="assets/global/scripts/datatable.js" type="text/javascript"></script>
+<script src="assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
+        type="text/javascript"></script>
+<script src="assets/pages/scripts/table-datatables-managed.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js"
+        type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"
+        type="text/javascript"></script>
+<script src="assets/global/plugins/sweetalert/sweetalert.min.js" type="text/javascript"></script>
+
+<!-- BEGIN THEME LAYOUT SCRIPTS ESTE NO-->
+<script src="assets/layouts/layout2/scripts/layout.min.js" type="text/javascript"></script>
+<script src="assets/layouts/layout2/scripts/demo.min.js" type="text/javascript"></script>
+<script src="assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+<script src="assets/pages/scripts/components-bootstrap-select.min.js" type="text/javascript"></script>
+<script>
+    function tipoFecha(tipo) {
+        $('#tipo_fecha').val(tipo);
+        $('#form_tipo_fecha').submit();
+    }
+</script>
+<script>
+    $(function () {
+
+        //Modal de las facturas
+        $('#verFactura').on('hidden.bs.modal', function (e) {
+            $('.modal-content').html('<div class="modal-body"><img src="assets/global/img/loading-spinner-grey.gif" alt="" class="loading"><span> &nbsp;&nbsp;Cargando... </span></div>');
+        });
+
+        $('#verFactura').on('loaded.bs.modal', function () {
+            $('#btn_cierra_modal').focus()
+        });
+
+        /*$(function(){
+         $('#datos_ingresos').slimScroll({
+         height: '400px'
+         });
+         });*/
+        var start = moment().subtract(5, 'days');
+        var end = moment();
+
+        $('.date-picker').datepicker({
+            rtl: App.isRTL(),
+            orientation: "left",
+            language: "es",
+            endDate: '0',
+            autoclose: true,
+            todayHighlight: true
+        });
 
 
-        <!-- Scripts -->
-            <script src="{{ asset('js/app.js') }}"></script>
-            <script>
-                function tipoFecha(tipo) {
-                    $('#tipo_fecha').val(tipo);
-                    $('#form_tipo_fecha').submit();
-                }
-            </script>
+        $('#define_fecha').daterangepicker({
+            startDate: start,
+            endDate: end,
+            "locale": {
+                "format": "YYYY-MM-DD",
+                "separator": "/",
+                "applyLabel": "Aplicar",
+                "cancelLabel": "Cerrar",
+                "fromLabel": "Desde",
+                "toLabel": "Hasta",
+                "customRangeLabel": "Personalizado",
+                "weekLabel": "W",
+                "daysOfWeek": [
+                    "Do",
+                    "Lu",
+                    "Ma",
+                    "Mi",
+                    "Ju",
+                    "Vi",
+                    "Sa"
+                ],
+                "monthNames": [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
+                    "Mayo",
+                    "Junio",
+                    "Julio",
+                    "Agosto",
+                    "Septiembre",
+                    "Octubre",
+                    "Noviembre",
+                    "Diciembre"
+                ],
+                "firstDay": 1
+            },
+            "applyClass": "blue btn-sm"
+        });
+
+        setTimeout(function () {
+
+            $('.daterangepicker_input').hide();
+
+        }, 500);
+
+
+    });
+    function cambiaRFC(id) {
+        var datos = "id=" + id;
+        $.post('data/cambia_rfc.php', datos, function (data) {
+            if (data == 1) {
+                location.reload();
+            } else {
+                alert(data);
+            }
+        });
+    }
+</script>
+<div class="page-footer">
+    <div class="page-footer-inner"> {{date('Y')}} © ADMINUS. Hecho con <i class="fa fa-heart"
+                                                                          style="color: #e74c3c;"></i> &amp; <i
+                class="fa fa-coffee"></i> por <a href="http://epicmedia.pro" target="_blank">EPICMEDIA</a>
+    </div>
+    <div class="scroll-to-top">
+        <i class="icon-arrow-up"></i>
+    </div>
+</div>
 </body>
 </html>

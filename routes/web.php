@@ -35,4 +35,9 @@ Route::group(['prefix' => 'app'], function () {
     Route::post('/', 'HomeController@postIndex');
 
 });
+/*
+Route::get('/js/charts', function(){
+    $content = View::make('js.chart')->with('datos', [
 
+    ]);
+});*/

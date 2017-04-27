@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Empresa;
+use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -32,8 +33,18 @@ class HomeController extends Controller
         $fecha2 = (Session::has('fecha2')) ? Session::get('fecha2') : Date::now();
         $user = Auth::user();
         if (!Session::has('empresa')) Session::put('empresa', $user->empresas->first());
-        //dd($user->empresas);
         $sesionEmpresa = Session::get('empresa');
+        $facturasEmitidas = $sesionEmpresa->facturasEmitidas->filter(function ($factura) use ($fecha1, $fecha2) {
+            return $factura->fecha >= $fecha1->format('Y-m-d') && $factura->fecha <= $fecha2->format('Y-m-d');
+        })->sortByDesc('fecha')->sortByDesc('id_factura_emitida');
+        $facturasRecibidas = $sesionEmpresa->facturasRecibidas->filter(function ($factura) use ($fecha1, $fecha2) {
+            return $factura->fecha >= $fecha1->format('Y-m-d') && $factura->fecha <= $fecha2->format('Y-m-d');
+        })->sortByDesc('fecha')->sortByDesc('id_factura_recibida');
+        if (!$user->vip) {
+            $facturasEmitidas = $facturasEmitidas->take(5);
+            $facturasRecibidas = $facturasRecibidas->take(5);
+        }
+        //dd($facturasRecibidas,$facturasEmitidas);
         $color_verde = "#23b176";
         $color_rojo = "#bf0606";
         $ocultar_refresh = false;
@@ -55,6 +66,10 @@ class HomeController extends Controller
         return view('app.home', [
             "usuario" => $user,
             'sesionEmpresa' => $sesionEmpresa,
+            'facturas' => [
+                'recibidas' => $facturasRecibidas,
+                'emitidas' => $facturasEmitidas
+            ],
             "bread" => [
                 'color' => $color_i,
                 'icono' => $icono_i,

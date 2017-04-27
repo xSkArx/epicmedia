@@ -51,10 +51,91 @@
             @include('app.note_block')
         @endif
     @endif
+    <script>
+        $(function () {
+            @if($facturas['emitidas']->count() > 0)
+            App.blockUI({
+                target: "#datos_ingresos",
+                animate: !0
+            });
+            setTimeout(function () {
+                App.unblockUI("#datos_ingresos");
+            }, 3000);
+            @endif
+            @if($facturas['recibidas']->count() > 0)
+            App.blockUI({
+                target: "#datos_egresos",
+                animate: !0
+            });
+            setTimeout(function () {
+                App.unblockUI("#datos_egresos");
+            }, 3000);
+            @endif
 
+        });
+    </script>
     <div class="row">
         @include('app.tabla.ingresos')
         @include('app.tabla.gastos')
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-pie-chart font-green-sharp"></i>
+                        <span class="caption-subject font-green-sharp bold uppercase">Cálculo aproximado de IVA</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div class="dashboard-stat2 " style="margin-bottom: 0;">
+                                <div class="display" style="margin-bottom: 0;">
+                                    <div class="number">
+                                        <h3 class="font-green-sharp">
+                                            <small>$</small>
+                                            <span data-counter="counterup"
+                                                  data-value="{{number_format($facturas['emitidas']->sum('importe'),2)}}">0.00</span>
+                                        </h3>
+                                        <small>IVA de Ingresos</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div class="dashboard-stat2 " style="margin-bottom: 0;">
+                                <div class="display" style="margin-bottom: 0;">
+                                    <div class="number">
+                                        <h3 class="font-red-haze">
+                                            <small>$</small>
+                                            <span data-counter="counterup"
+                                                  data-value="{{number_format($facturas['recibidas']->sum('importe'),2)}}">0.00</span>
+                                        </h3>
+                                        <small>Iva de Gastos (Acreditable*)</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div class="dashboard-stat2 " style="margin-bottom: 0;">
+                                <div class="display" style="margin-bottom: 0;">
+                                    <div class="number">
+                                        <h3 class="font-green-sharp">
+                                            <small>$</small>
+                                            <span data-counter="counterup"
+                                                  data-value="{{number_format($facturas['emitidas']->sum('importe') - $facturas['recibidas']->sum('importe'),2)}}">0.00</span>
+                                        </h3>
+                                        <small>IVA Pendiente*</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 

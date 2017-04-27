@@ -500,6 +500,7 @@ var App = function() {
     // Handles counterup plugin wrapper
     var handleCounterup = function() {
         if (!$().counterUp) {
+            console.log('no counter up');
             return;
         }
 

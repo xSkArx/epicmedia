@@ -50,7 +50,8 @@ class User extends Authenticatable
         return $this->belongsTo('App\Paquete', 'id_paquete');
     }
 
-    public function hasEmpresas(){
+    public function hasEmpresas()
+    {
         return (bool)$this->empresas;
     }
 }
