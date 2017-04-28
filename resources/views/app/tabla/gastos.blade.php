@@ -40,20 +40,20 @@
                             <div class="tabbable-line">
                                 <ul class="nav nav-tabs">
                                     <li class="active">
-                                        <a href="#overview1_1" data-toggle="tab"> Facturas </a>
+                                        <a href="#overview_1" data-toggle="tab"> Facturas </a>
                                     </li>
                                     @if($usuario->vip)
                                         <li>
-                                            <a href="#overview1_2" data-toggle="tab"> Clientes </a>
+                                            <a href="#overview_2" data-toggle="tab"> Clientes </a>
                                         </li>
                                         <li>
-                                            <a href="#overview1_3" data-toggle="tab"> Métodos de Pago </a>
+                                            <a href="#overview_3" data-toggle="tab"> Métodos de Pago </a>
                                         </li>
                                     @endif
                                 </ul>
                                 <div class="tab-content scroller" id="datos_gastos" style="height: 400px;" data-always-visible="1" data-rail-visible="0">
                                     <!--Facturas-recibidas-->
-                                    <div class="tab-pane active" id="overview1_1">
+                                    <div class="tab-pane active" id="overview_1">
                                         <div class="table-responsive">
                                             <table class="table table-striped table-hover table-bordered">
                                                 <thead>

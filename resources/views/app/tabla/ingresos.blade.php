@@ -106,6 +106,12 @@
                         @endif
                 </div>
             </div>
+            @if(!$usuario->vip)
+                @if($sessionEmpresa->facturasEmitidas->count() >= 5)
+                    <center><span>Últimas 5 Facturas<br><a href="app/planes" style="text-decoration: underline">Mejora tu Plan para ver más</a><br></span>
+                    </center>
+                @endif
+            @endif
         </div>
     </div>
 </div>
