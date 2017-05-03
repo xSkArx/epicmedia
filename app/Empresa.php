@@ -30,7 +30,8 @@ class Empresa extends Model
         return $this->belongsTo('App\User', 'id_usuario');
     }
 
-    public function facturasEmitidas() {
+    public function facturasEmitidas()
+    {
         return $this->hasMany('App\FacturasEmitidas', 'id_empresa');
     }
 }

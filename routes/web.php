@@ -41,3 +41,7 @@ Route::get('/js/charts', function(){
 
     ]);
 });*/
+
+Route::get('/s', function(){
+    return get_class(App\Empresa::find(217)->facturasEmitidas);
+});

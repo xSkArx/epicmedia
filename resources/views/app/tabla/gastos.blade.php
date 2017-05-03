@@ -33,7 +33,9 @@
                 <div class="col-md-12">
                     @if(!$facturas['recibidas']->count())
                         @if(!$sesionEmpresa->primera_descarga)
-                            <h4><center>No se encontraron facturas de gastos.</center></h4>
+                            <h4>
+                                <center>No se encontraron facturas de gastos.</center>
+                            </h4>
                         @endif
                     @else
                         <div class="portlet-body">
@@ -51,7 +53,8 @@
                                         </li>
                                     @endif
                                 </ul>
-                                <div class="tab-content scroller" id="datos_gastos" style="height: 400px;" data-always-visible="1" data-rail-visible="0">
+                                <div class="tab-content scroller" id="datos_gastos" style="height: 400px;"
+                                     data-always-visible="1" data-rail-visible="0">
                                     <!--Facturas-recibidas-->
                                     <div class="tab-pane active" id="overview_1">
                                         <div class="table-responsive">
@@ -91,18 +94,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                @endif
                             </div>
                         </div>
-                        @if($facturas['recibidas']->count())
-                            <p class="text-right">
-                                <br/>
-                                <a data-log="5" class="log btn btn-sm red" href="app/facturas/gastos">Ir a
-                                    gastos</a>
-                            </p>
-                        @endif
+                    @endif
+                    @if($facturas['recibidas']->count())
+                        <p class="text-right">
+                            <br/>
+                            <a data-log="5" class="log btn btn-sm red" href="app/facturas/gastos">Ir a
+                                gastos</a>
+                        </p>
+                    @endif
                 </div>
             </div>
+            @if(!$usuario->vip)
+                @if($sessionEmpresa->facturasRecibidas->count() >= 5)
+                    <center><span>Últimas 5 Facturas<br><a href="app/planes" style="text-decoration: underline">Mejora tu Plan para ver más</a><br></span>
+                    </center>
+                @endif
+            @endif
         </div>
     </div>
 </div>

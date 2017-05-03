@@ -94,16 +94,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                @endif
                             </div>
                         </div>
-                        @if($facturas['emitidas']->count())
-                            <p class="text-right">
-                                <br/>
-                                <a data-log="5" class="log btn btn-sm green-jungle" href="app/facturas/ingresos">Ir a
-                                    Ingresos</a>
-                            </p>
-                        @endif
+                    @endif
+                    @if($facturas['emitidas']->count())
+                        <p class="text-right">
+                            <br/>
+                            <a data-log="5" class="log btn btn-sm green-jungle" href="app/facturas/ingresos">Ir a
+                                Ingresos</a>
+                        </p>
+                    @endif
                 </div>
             </div>
             @if(!$usuario->vip)
