@@ -93,6 +93,71 @@
                                             </table>
                                         </div>
                                     </div>
+                                    @if($usuario->vip)
+                                        <div class="tab-pane" id="overview1_2">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-hover table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th> Cliente</th>
+                                                        <th> Total</th>
+                                                        <th></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @php
+                                                        $ff = $facturas['emitidas']->groupBy('rfc')->sortByDesc(function ($rfc) {
+                                                            return $rfc->sum('total');
+                                                        });
+                                                    @endphp
+                                                    @foreach ($ff as $rfc => $factura)
+                                                        <tr>
+                                                            <td>
+                                                                {{$factura->first()->razon_social}}
+                                                            </td>
+                                                            <td align="right"> {{number_format($factura->sum('total'), 2)}}</td>
+                                                            <td>
+                                                                <span class="label label-sm font-grey-mint"><a
+                                                                            href="facturas/ingresos/cliente/{{$rfc}}"> VER </a></span>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="overview1_3">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-hover table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th> Método de Pago</th>
+                                                        <th> Total</th>
+                                                        <!--<th> </th>-->
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @php
+                                                        $ff = $facturas['emitidas']->groupBy('metodo_real')->sortByDesc(function ($rfc) {
+                                                            return $rfc->sum('total');
+                                                        });
+                                                    @endphp
+                                                    @foreach ($ff as $metodo_real => $factura)
+                                                    <tr>
+                                                        <td>
+                                                            {{$metodo_real}}
+                                                        </td>
+                                                        <td align="right"> {{number_format($factura->sum('total'), 2) }} </td>
+                                                        <!--<td>
+                                                            <span class="label label-sm font-grey-mint"> VER </span>
+                                                        </td>-->
+                                                    </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -107,7 +172,7 @@
                 </div>
             </div>
             @if(!$usuario->vip)
-                @if($sessionEmpresa->facturasEmitidas->count() >= 5)
+                @if($sesionEmpresa->facturasEmitidas->count() >= 5)
                     <center><span>Últimas 5 Facturas<br><a href="app/planes" style="text-decoration: underline">Mejora tu Plan para ver más</a><br></span>
                     </center>
                 @endif

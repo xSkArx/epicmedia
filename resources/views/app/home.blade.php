@@ -138,5 +138,95 @@
         </div>
     </div>
 
+    @if($usuario->vip)
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <!-- BEGIN PORTLET-->
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-share font-red-sunglo hide"></i>
+                            <span class="caption-subject font-<?= $btn_general ?> sbold uppercase"><?= $txt_general ?> </span>
+                            <span class="caption-helper"> mes a mes</span>
+                        </div>
+
+                        <div class="actions">
+                            <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                <div class="btn-group">
+                                    <button type="button" data-log="2" class="log btn <?= $btn2 ?>" <?= $accion2 ?>>
+                                        INGRESOS <?= date('Y') ?></button>
+                                    <button type="button" data-log="3" class="log btn <?= $btn1 ?>" <?= $accion1 ?>>
+                                        GASTOS <?= date('Y') ?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="portlet-body">
+                        <div id="site_activities_loading">
+                            <img src="assets/global/img/loading.gif" alt="loading"/></div>
+                        <div id="site_activities_content" class="display-none">
+                            <div id="site_activities" style="height: 228px;"></div>
+                        </div>
+                        <div style="margin: 20px 0 10px 30px">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-3 col-xs-6 text-stat">
+                                    <span class="label label-sm label-info"> TOTAL <?= date('Y') ?>: </span>
+                                    <h3>$ <?= $total_anual ?></h3>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-6 text-stat">
+                                    <span class="label label-sm label-info"> IVA <?= date('Y') ?>: </span>
+                                    <h3>$ <?= $total_iva_anual ?></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END PORTLET-->
+            </div>
+
+        </div>
+    @endif
+
+    <!--MODAL FECHAS-->
+    <div class="modal fade" id="cambiaFechas">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span
+                                class="sr-only">Cerrar</span></button>
+                    <h4 class="modal-title"><i class="icon-calendar"></i> Filtrado por Fechas</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger display-hide" role="alert" id="fechas_msg_error"></div>
+                    <div class="alert alert-success display-hide" role="alert" id="fechas_msg_ok"></div>
+                    <form id="frm_fechas" class="form-horizontal" action="app" method="post">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Seleccione Rango: </label>
+                            <div class="col-md-8">
+
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="define_fecha" name="rango_fechas">
+                                    <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Cerrar</button>
+                    <button type="submit" class="btn blue btn_ac" onclick="$('#frm_fechas').submit()">Filtrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 @endsection

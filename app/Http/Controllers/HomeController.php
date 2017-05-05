@@ -35,16 +35,18 @@ class HomeController extends Controller
         if (!Session::has('empresa')) Session::put('empresa', $user->empresas->first());
         $sesionEmpresa = Session::get('empresa');
         $facturasEmitidas = $sesionEmpresa->facturasEmitidas->filter(function ($factura) use ($fecha1, $fecha2) {
-            return $factura->fecha >= $fecha1->format('Y-m-d') && $factura->fecha <= $fecha2->format('Y-m-d');
+            return $factura->fecha >= $fecha1->format('Y-m-d') && $factura->fecha <= $fecha2->format('Y-m-d') && $factura->id_tipo_cfdi == 1;
         })->sortByDesc('fecha')->sortByDesc('id_factura_emitida');
         $facturasRecibidas = $sesionEmpresa->facturasRecibidas->filter(function ($factura) use ($fecha1, $fecha2) {
-            return $factura->fecha >= $fecha1->format('Y-m-d') && $factura->fecha <= $fecha2->format('Y-m-d');
+            return $factura->fecha >= $fecha1->format('Y-m-d') && $factura->fecha <= $fecha2->format('Y-m-d') && $factura->id_tipo_cfdi == 1;
         })->sortByDesc('fecha')->sortByDesc('id_factura_recibida');
         if (!$user->vip) {
             $facturasEmitidas = $facturasEmitidas->take(5);
             $facturasRecibidas = $facturasRecibidas->take(5);
         }
         //dd($facturasRecibidas,$facturasEmitidas);
+
+
         $color_verde = "#23b176";
         $color_rojo = "#bf0606";
         $ocultar_refresh = false;
