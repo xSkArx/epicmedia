@@ -488,6 +488,9 @@
         });
     }
 </script>
+@if($usuario->vip)
+    <script src="js/charts"></script>
+@endif
 <div class="page-footer">
     <div class="page-footer-inner"> {{date('Y')}} © ADMINUS. Hecho con <i class="fa fa-heart"
                                                                           style="color: #e74c3c;"></i> &amp; <i

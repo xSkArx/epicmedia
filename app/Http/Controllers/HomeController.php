@@ -84,6 +84,7 @@ class HomeController extends Controller
 
     public function postIndex(Request $request)
     {
+        //dd(Input::all());
         if ($request->isMethod('post')) {
             if (Input::has('tipo_fecha')) {
                 switch (Input::get('tipo_fecha')) {
@@ -106,6 +107,10 @@ class HomeController extends Controller
                 list($fecha1, $fecha2) = explode('/', Input::get('rango_fechas'));
                 Session::put('fecha1', Date::parse($fecha1));
                 Session::put('fecha2', Date::parse($fecha2));
+            }
+
+            if (Input::has('tipo_chart')) {
+                Session::put('chart', Input::get('tipo_chart'));
             }
         }
         return redirect('app');

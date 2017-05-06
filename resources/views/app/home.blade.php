@@ -146,17 +146,28 @@
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="icon-share font-red-sunglo hide"></i>
-                            <span class="caption-subject font-<?= $btn_general ?> sbold uppercase"><?= $txt_general ?> </span>
+                            <span class="caption-subject font-<? /*$btn_general*/ ?> sbold uppercase"><? /*$txt_general*/ ?> </span>
                             <span class="caption-helper"> mes a mes</span>
                         </div>
 
                         <div class="actions">
                             <div class="btn-group btn-group-devided" data-toggle="buttons">
                                 <div class="btn-group">
-                                    <button type="button" data-log="2" class="log btn <?= $btn2 ?>" <?= $accion2 ?>>
-                                        INGRESOS <?= date('Y') ?></button>
-                                    <button type="button" data-log="3" class="log btn <?= $btn1 ?>" <?= $accion1 ?>>
-                                        GASTOS <?= date('Y') ?></button>
+                                    <form method="post" action="app" id="frm_tipo_chart">
+                                        {{csrf_field()}}
+                                        <input type="hidden" id="tipo_chart" name="tipo_chart">
+                                        <button type="button" data-log="2" onclick="tipoChart('emitidas')"
+                                                class="log btn <? /*$btn2*/ ?>">
+                                            INGRESOS <?= date('Y') ?></button>
+                                        <button type="button" data-log="3" onclick="tipoChart('recibidas')"
+                                                class="log btn <? /*$btn1*/ ?>">
+                                            GASTOS <?= date('Y') ?></button>
+                                    </form>
+                                    <script>
+                                        function tipoChart(str) {
+                                            $("#tipo_chart").val(str).parent().submit();
+                                        }
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -165,7 +176,8 @@
 
                     <div class="portlet-body">
                         <div id="site_activities_loading">
-                            <img src="assets/global/img/loading.gif" alt="loading"/></div>
+                            <img src="assets/global/img/loading.gif" alt="loading"/>
+                        </div>
                         <div id="site_activities_content" class="display-none">
                             <div id="site_activities" style="height: 228px;"></div>
                         </div>
@@ -173,11 +185,11 @@
                             <div class="row">
                                 <div class="col-md-3 col-sm-3 col-xs-6 text-stat">
                                     <span class="label label-sm label-info"> TOTAL <?= date('Y') ?>: </span>
-                                    <h3>$ <?= $total_anual ?></h3>
+                                    <h3>$ <? /*$total_anual*/ ?></h3>
                                 </div>
                                 <div class="col-md-3 col-sm-3 col-xs-6 text-stat">
                                     <span class="label label-sm label-info"> IVA <?= date('Y') ?>: </span>
-                                    <h3>$ <?= $total_iva_anual ?></h3>
+                                    <h3>$ <? /*$total_iva_anual*/ ?></h3>
                                 </div>
                             </div>
                         </div>
