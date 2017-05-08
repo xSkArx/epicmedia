@@ -502,3 +502,49 @@
 </div>
 </body>
 </html>
+<div class="modal fade" id="empresa_premium">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom:none;">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Cerrar</span></button>
+                <!--<h4 class="modal-title">Alerta</h4>-->
+            </div>
+            <div class="modal-body">
+                <center>
+                    <img src="logoadmins_AZUL.png" style="height: 30px;margin-top: 5px;"/>
+                    <p style="font-size: 18px;margin-top: 40px;">Tu plan
+                        <b>{{ ucwords(strtolower(($usuario->paquete) ? $usuario->paquete->paquete : 'gratuito')) }}</b>
+                        sólo puede tener
+                        <b>{{($usuario->paquete) ? $usuario->paquete->empresas : '5'}}</b> empresas, te recomendamos
+                        actualizar a un plan mayor.</p>
+                    <a role="button" href="app/planes" class=" btn btn-success" style="margin: 5px 0 20px 0;">Ver
+                        planes</a>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="paquete_expirado">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom:none;">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Cerrar</span></button>
+                <!--<h4 class="modal-title">Alerta</h4>-->
+            </div>
+            <div class="modal-body">
+                <center>
+                    <img src="logoadmins_AZUL.png" style="height: 30px;margin-top: 5px;"/>
+                    <p style="font-size: 18px;margin-top: 40px;">Tu plan
+                        <b>{{ ucwords(strtolower(($usuario->paquete) ? $usuario->paquete->paquete : 'gratuito')) }}></b>
+                        ha expirado, suscríbete a un
+                        Plan de <b>Adminus</b> y disfruta de todas sus funcionalidades.</p>
+                    <a role="button" href="app/planes" class=" btn btn-success" style="margin: 5px 0 20px 0;">Ver
+                        planes</a>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>

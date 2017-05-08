@@ -45,8 +45,8 @@ class HomeController extends Controller
             $facturasRecibidas = $facturasRecibidas->take(5);
         }
         //dd($facturasRecibidas,$facturasEmitidas);
-
-
+        $total_anual = 0;
+        $total_iva_anual = 0;
         $color_verde = "#23b176";
         $color_rojo = "#bf0606";
         $ocultar_refresh = false;
@@ -65,6 +65,36 @@ class HomeController extends Controller
             $icono_i = "fa fa-refresh";
             $texto_i = "[Descargando Facturas del SAT]";
         }
+        $tipo_chart = Session::has('chart') ? Session::get('chart') : "emitidas";
+        switch ($tipo_chart) {
+            case 'recibidas':
+
+                $btn1 = 'red';
+                $btn2 = 'default';
+                $btn_general = $btn1;
+                $txt_general = 'GASTOS';
+                $total_anual = $sesionEmpresa->facturasRecibidas->filter(function ($f) {
+                    return $f->fecha >= Date::parse('first day of january')->format('Y-m-d') && $f->fecha <= Date::now()->format('Y-m-d') && $f->id_tipo_cfdi == 1;
+                })->sum('total');
+                $total_iva_anual = $sesionEmpresa->facturasRecibidas->filter(function ($f) {
+                    return $f->fecha >= Date::parse('first day of january')->format('Y-m-d') && $f->fecha <= Date::now()->format('Y-m-d') && $f->id_tipo_cfdi == 1;
+                })->sum('importe');
+
+                break;
+
+            case 'emitidas':
+            default:
+                $btn1 = 'default';
+                $btn2 = 'green-jungle';
+                $btn_general = $btn2;
+                $txt_general = 'INGRESOS';
+                $total_anual = $sesionEmpresa->facturasEmitidas->filter(function ($f) {
+                    return $f->fecha >= Date::parse('first day of january')->format('Y-m-d') && $f->fecha <= Date::now()->format('Y-m-d') && $f->id_tipo_cfdi == 1;
+                })->sum('total');
+                $total_iva_anual = $sesionEmpresa->facturasEmitidas->filter(function ($f) {
+                    return $f->fecha >= Date::parse('first day of january')->format('Y-m-d') && $f->fecha <= Date::now()->format('Y-m-d') && $f->id_tipo_cfdi == 1;
+                })->sum('importe');
+        }
         return view('app.home', [
             "usuario" => $user,
             'sesionEmpresa' => $sesionEmpresa,
@@ -78,7 +108,8 @@ class HomeController extends Controller
                 'texto' => $texto_i,
                 'refresh' => $ocultar_refresh
             ],
-            "fechas" => [$fecha1, $fecha2]
+            "fechas" => [$fecha1, $fecha2],
+            "charts" => [$btn1, $btn2, $btn_general, $txt_general, number_format($total_anual, 2), number_format($total_iva_anual, 2)],
         ]);
     }
 

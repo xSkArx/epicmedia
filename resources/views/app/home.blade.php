@@ -146,7 +146,7 @@
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="icon-share font-red-sunglo hide"></i>
-                            <span class="caption-subject font-<? /*$btn_general*/ ?> sbold uppercase"><? /*$txt_general*/ ?> </span>
+                            <span class="caption-subject font-{{$charts[2]}} sbold uppercase">{{$charts[3]}} </span>
                             <span class="caption-helper"> mes a mes</span>
                         </div>
 
@@ -157,10 +157,10 @@
                                         {{csrf_field()}}
                                         <input type="hidden" id="tipo_chart" name="tipo_chart">
                                         <button type="button" data-log="2" onclick="tipoChart('emitidas')"
-                                                class="log btn <? /*$btn2*/ ?>">
+                                                class="log btn {{$charts[1]}}">
                                             INGRESOS <?= date('Y') ?></button>
                                         <button type="button" data-log="3" onclick="tipoChart('recibidas')"
-                                                class="log btn <? /*$btn1*/ ?>">
+                                                class="log btn {{$charts[0]}}">
                                             GASTOS <?= date('Y') ?></button>
                                     </form>
                                     <script>
@@ -185,11 +185,11 @@
                             <div class="row">
                                 <div class="col-md-3 col-sm-3 col-xs-6 text-stat">
                                     <span class="label label-sm label-info"> TOTAL <?= date('Y') ?>: </span>
-                                    <h3>$ <? /*$total_anual*/ ?></h3>
+                                    <h3>$ {{$charts[4]}}</h3>
                                 </div>
                                 <div class="col-md-3 col-sm-3 col-xs-6 text-stat">
                                     <span class="label label-sm label-info"> IVA <?= date('Y') ?>: </span>
-                                    <h3>$ <? /*$total_iva_anual*/ ?></h3>
+                                    <h3>$ {{$charts[5]}}</h3>
                                 </div>
                             </div>
                         </div>
