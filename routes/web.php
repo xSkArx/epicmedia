@@ -33,6 +33,8 @@ Route::group(['prefix' => 'app'], function () {
 
     Route::get('/', ['as' => 'app', 'uses' => 'HomeController@index']);
     Route::post('/', 'HomeController@postIndex');
+    Route::get('/facturas/ingresos', 'FacturasController@facturas');
+    Route::get('/facturas/gastos', 'FacturasController@facturas');
 
 });
 
