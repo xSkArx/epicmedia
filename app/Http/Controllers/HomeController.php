@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 use Jenssegers\Date\Date;
 
 class HomeController extends Controller
@@ -142,6 +144,6 @@ class HomeController extends Controller
                 Session::put('chart', Input::get('tipo_chart'));
             }
         }
-        return redirect('app');
+        return Redirect::back();
     }
 }

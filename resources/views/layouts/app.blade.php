@@ -232,7 +232,7 @@
                 data-auto-scroll="true" data-slide-speed="200">
                 <!-- Activa con clases "active open"-->
                 <li class="nav-item start {{ (Request::is('app') ? 'active' : '') }}">
-                    <a href="app" class="nav-link nav-toggle">
+                    <a href="/app" class="nav-link nav-toggle">
                         <i class="icon-bar-chart"></i>
                         <span class="title">Indicadores</span>
                         <span class="arrow"></span>

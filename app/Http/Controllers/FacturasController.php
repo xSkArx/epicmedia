@@ -30,11 +30,29 @@ class FacturasController extends Controller
                 $facturas = $sesionEmpresa->facturasEmitidas->filter(function ($factura) use ($fecha1, $fecha2) {
                     return $factura->fecha >= $fecha1->format('Y-m-d') && $factura->fecha <= $fecha2->format('Y-m-d');
                 });
+                $m_id_factura = "id_factura_emitida";
+                $m_facturas = "facturas_emitidas";
+                $m_titulo = "Ingresos";
+                $m_xls = "ingresos";
+                $m_zip = "emitidas";
+                $m_color = "green-jungle";
+                $m_dfact= "download_factura_emitida";
+                $m_filtrado_nombre = "Cliente";
+                $m_factura_html = 2;
                 break;
             case 'app/facturas/gastos':
                 $facturas = $sesionEmpresa->facturasRecibidas->filter(function ($factura) use ($fecha1, $fecha2) {
                     return $factura->fecha >= $fecha1->format('Y-m-d') && $factura->fecha <= $fecha2->format('Y-m-d');
                 });
+                $m_id_factura = "id_factura_recibida";
+                $m_facturas = "facturas_recibidas";
+                $m_titulo = "Gastos";
+                $m_xls = "gastos";
+                $m_zip = "recibidas";
+                $m_color = "red-thunderbird";
+                $m_dfact= "download_factura_recibida";
+                $m_filtrado_nombre = "Proveedor";
+                $m_factura_html = 1;
                 break;
 
         }

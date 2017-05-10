@@ -13,7 +13,7 @@
             <div class="page-toolbar ">
                 <div class="btn-group pull-right">
                     @if($usuario->vip)
-                        <form action="app" method="post" id="form_tipo_fecha">
+                        <form action="/app" method="post" id="form_tipo_fecha">
                             <input type="hidden" name="tipo_fecha" value="1" id="tipo_fecha">
                             {{ csrf_field() }}
                         </form>
