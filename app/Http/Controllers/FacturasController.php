@@ -56,6 +56,16 @@ class FacturasController extends Controller
                 break;
 
         }
+        $proveedores = $facturas->sortBy('razon_social')->groupBy('rfc')->transform(function ($item, $k){
+            return $item->groupBy('razon_social')->keys();
+        })->toArray();
+        /*echo '<pre>';
+        foreach ($proveedores as $k => $v) {
+            echo $k. " " .$v. "\n";
+        } die();*/
+        //dd($proveedores);
+        //die($proveedores->toJson());
+        //dd(Route::current()->uri);
         $color_verde = "#23b176";
         $color_rojo = "#bf0606";
         $ocultar_refresh = false;
@@ -63,6 +73,15 @@ class FacturasController extends Controller
         $icono_i = "fa fa-exclamation-circle";
         $texto_i = "[Usuario Expirado]";
 
+        $html = [
+            'titulo' => $m_titulo,
+            'xls' => $m_xls,
+            'zip' => $m_zip,
+            'color' => $m_color,
+            'dfact' => $m_dfact,
+            'filtrar' => $m_filtrado_nombre,
+            'factura_html' => $m_factura_html,
+        ];
         if (!$sesionEmpresa->primera_descarga) {
             if ($user->vip) {
                 $icono_i = ($user->id_paquete == 0) ? "fa fa-star-o" : "fa fa-star";
@@ -86,6 +105,8 @@ class FacturasController extends Controller
                 'texto' => $texto_i,
                 'refresh' => $ocultar_refresh
             ],
+            'html' => $html,
+            'proveedores' => $proveedores,
         ]);
     }
 }

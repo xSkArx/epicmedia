@@ -52,6 +52,6 @@ class User extends Authenticatable
 
     public function hasEmpresas()
     {
-        return (bool)$this->empresas;
+        return $this->empresas->isNotEmpty();
     }
 }
