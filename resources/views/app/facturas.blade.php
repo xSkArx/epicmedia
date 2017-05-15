@@ -214,7 +214,7 @@
                                 $contador_bloqueo = 1;
                             @endphp
                             @while($i < $facturas->count())
-                                
+
                             @endwhile
                             </tbody>
                         </table>
