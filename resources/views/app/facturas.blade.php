@@ -169,7 +169,7 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    @if($usuario->vip && $sesionEmpresa->facturas)
+                    @if($usuario->vip && $facturas)
                         <div class="row">
                             <div class="col-md-12 contador" style="text-align: right;">
                                 <span class="font-{{$html['color']}}" id="datos_top" style="display: none">
@@ -213,9 +213,52 @@
                                 $i = 0;
                                 $contador_bloqueo = 1;
                             @endphp
-                            @while($i < $facturas->count())
-
-                            @endwhile
+                            @foreach($facturas->sortByDesc($html['id_factura']) as $factura)
+                                @if(!$usuario->vip)
+                                    @if($contador_bloqueo > 5 && $facturas->count() > 5)
+                                        @php
+                                            $css_block = "block1 noselect";
+                                            $tr_only = "limited";
+                                            $nohover ="background:white;cursor:pointer"
+                                        @endphp
+                                    @else
+                                        @php
+                                            unset($css_block);
+                                            unset($nohover);
+                                        @endphp
+                                    @endif
+                                @endif
+                                <tr style="<?=@$nohover?>" class="<?=@$tr_only?>">
+                                    <td class="<?=@$css_block?>"><?=strtoupper(Date::parse($factura->fecha)->format('d/M/Y'))?></td>
+                                    <td class="<?=@$css_block?>">
+                                        <strong>
+                                            @if(empty($css_block))
+                                                {{$factura->rfc}}
+                                            @else
+                                                {{"Limitado"}}
+                                            @endif
+                                        </strong>
+                                    </td>
+                                    <td class="hidden-xs <?=@$css_block ?>">
+                                        {{empty($css_block) ? $factura->razon_social : "Limitado"}}
+                                    </td>
+                                    <td class="visible-lg hidden-xs <?=@$css_block ?>">
+                                        {{empty($css_block) ? $factura->metodo_real : "Limitado"}}
+                                    </td>
+                                    <td class="visible-lg hidden-xs <?=@$css_block ?> {{(!Input::has('cfdi')) ? ($factura->id_tipo_cfdi != 1 ? "font-red" : "") :""}}">
+                                        @if (strtoupper($factura->id_tipo_cfdi) == 1)
+                                        FACTURA
+                                        @elseif (strtoupper($factura->id_tipo_cfdi) == 2)
+                                        NOTA DE CRÉDITO
+                                        @elseif (strtoupper($factura->id_tipo_cfdi) == 3)
+                                        NÓMINA
+                                        @elseif (strtoupper($factura->id_tipo_cfdi) == 4)
+                                        CANCELADA
+                                        @endif
+                                    </td>
+                                </tr>
+                                @php($i++)
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -223,5 +266,11 @@
             </div>
         </div>
     </div>
-
+    <script>
+        $(function () {
+            $('#monto_facturas').html('<?=@$total_totales?>');
+            $('#datos_top').fadeIn();
+            $('.actions').fadeIn();
+        });
+    </script>
 @endsection

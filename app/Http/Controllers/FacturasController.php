@@ -81,6 +81,7 @@ class FacturasController extends Controller
             'dfact' => $m_dfact,
             'filtrar' => $m_filtrado_nombre,
             'factura_html' => $m_factura_html,
+            "id_factura" => $m_id_factura,
         ];
         if (!$sesionEmpresa->primera_descarga) {
             if ($user->vip) {
