@@ -247,13 +247,44 @@
                                     </td>
                                     <td class="visible-lg hidden-xs <?=@$css_block ?> {{(!Input::has('cfdi')) ? ($factura->id_tipo_cfdi != 1 ? "font-red" : "") :""}}">
                                         @if (strtoupper($factura->id_tipo_cfdi) == 1)
-                                        FACTURA
+                                            FACTURA
                                         @elseif (strtoupper($factura->id_tipo_cfdi) == 2)
-                                        NOTA DE CRÉDITO
+                                            NOTA DE CRÉDITO
                                         @elseif (strtoupper($factura->id_tipo_cfdi) == 3)
-                                        NÓMINA
+                                            NÓMINA
                                         @elseif (strtoupper($factura->id_tipo_cfdi) == 4)
-                                        CANCELADA
+                                            CANCELADA
+                                        @endif
+                                    </td>
+                                    <td class="hidden-xs text-right <?=@$css_block?> {{(!Input::has('cfdi')) ? ($factura->id_tipo_cfdi != 1 ? "font-red" : "") :""}}">
+                                        {{number_format($factura->subtotal,2)}}
+                                    </td>
+                                    <td class="hidden-xs text-right <?=@$css_block?> {{(!Input::has('cfdi')) ? ($factura->id_tipo_cfdi != 1 ? "font-red" : "") :""}}">
+                                        {{number_format($factura->importe,2)}}
+                                    </td>
+                                    <td class="text-right <?=@$css_block?> {{(!Input::has('cfdi')) ? ($factura->id_tipo_cfdi != 1 ? "font-red" : "") :""}}">
+                                        {{number_format($factura->total,2)}}
+                                    </td>
+                                    <td class="text-right <?=@$css_block?>">
+                                        @if(empty($css_block))
+                                            @if($usuario->vip)
+                                                <span class="label"><a data-log="12" class="log"
+                                                                       href="formatos/factura_html.php?t={{$html['factura_html']}}&i=<?=$factura->{$html['id_factura']}?>"
+                                                                       data-target="#verFactura" data-toggle="modal"> VER </a></span>
+                                                &nbsp;
+                                                <span class="label"><a data-log="14" class="log"
+                                                                       href="{{$html['dfact']}}.php?id_factura=<?=$factura->{$html['id_factura']}?>"> XML</a></span>
+                                            @else
+                                                <span class="label"><a data-target="#paquete_expirado"
+                                                                       data-toggle="modal"> VER </a></span>&nbsp;
+                                                <span class="label"><a data-target="#paquete_expirado"
+                                                                       data-toggle="modal"> XML</a></span>
+                                            @endif
+
+                                        @else
+                                            <span class="label"><a data-target="#paquete_expirado" data-toggle="modal"> VER </a></span>
+                                            &nbsp;
+                                            <span class="label"><a data-target="#paquete_expirado" data-toggle="modal"> XML</a></span>
                                         @endif
                                     </td>
                                 </tr>
