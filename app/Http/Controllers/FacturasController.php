@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Jenssegers\Date\Date;
@@ -24,6 +25,8 @@ class FacturasController extends Controller
         if (!Session::has('empresa')) Session::put('empresa', $user->empresas->first());
         $sesionEmpresa = Session::get('empresa');
         $facturas = null;
+        $orden = Input::has('ordena') ? Input::get('ordena') : 1;
+        $tipo = Input::has('tipo') ? Input::get('tipo') : 1;
         //dd(Route::current()->uri);
         switch (Route::current()->uri) {
             case 'app/facturas/ingresos':
@@ -36,7 +39,7 @@ class FacturasController extends Controller
                 $m_xls = "ingresos";
                 $m_zip = "emitidas";
                 $m_color = "green-jungle";
-                $m_dfact= "download_factura_emitida";
+                $m_dfact = "download_factura_emitida";
                 $m_filtrado_nombre = "Cliente";
                 $m_factura_html = 2;
                 break;
@@ -50,15 +53,37 @@ class FacturasController extends Controller
                 $m_xls = "gastos";
                 $m_zip = "recibidas";
                 $m_color = "red-thunderbird";
-                $m_dfact= "download_factura_recibida";
+                $m_dfact = "download_factura_recibida";
                 $m_filtrado_nombre = "Proveedor";
                 $m_factura_html = 1;
                 break;
 
         }
-        $proveedores = $facturas->sortBy('razon_social')->groupBy('rfc')->transform(function ($item, $k){
+        $proveedores = $facturas->sortBy('razon_social')->groupBy('rfc')->transform(function ($item, $k) {
             return $item->groupBy('razon_social')->keys();
         })->toArray();
+        switch ($orden) {
+            case 1:
+                if ($tipo == 2) {
+                    $facturas = $facturas->sortByDesc('fecha')->sortByDesc($m_id_factura);
+                } else {
+                    $facturas = $facturas->sortBy('fecha')->sortBy($m_id_factura);
+                }
+                break;
+            case 2:
+                if ($tipo == 2) {
+                    $facturas = $facturas->sortByDesc('rfc')->sortByDesc('fecha');
+                } else {
+                    $facturas = $facturas->sortBy('rfc')->sortByDesc('fecha');
+                }
+                break;
+            case 3:
+                if ($tipo == 2) {
+                    $facturas = $facturas->sortByDesc('razon_social')->sortByDesc('fecha');
+                } else {
+                    $facturas = $facturas->sortBy('razon_social')->sortByDesc('fecha');
+                }
+        }
         /*echo '<pre>';
         foreach ($proveedores as $k => $v) {
             echo $k. " " .$v. "\n";

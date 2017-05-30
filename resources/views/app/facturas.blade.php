@@ -299,7 +299,7 @@
     </div>
     <script>
         $(function () {
-            $('#monto_facturas').html('<?=@$total_totales?>');
+            $('#monto_facturas').html('<?=$facturas->sum("total")?>');
             $('#datos_top').fadeIn();
             $('.actions').fadeIn();
         });
