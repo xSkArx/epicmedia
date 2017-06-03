@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -30,9 +31,6 @@ class FacturasController extends Controller
         //dd(Route::current()->uri);
         switch (Route::current()->uri) {
             case 'app/facturas/ingresos':
-                $facturas = $sesionEmpresa->facturasEmitidas->filter(function ($factura) use ($fecha1, $fecha2) {
-                    return $factura->fecha >= $fecha1->format('Y-m-d') && $factura->fecha <= $fecha2->format('Y-m-d');
-                });
                 $m_id_factura = "id_factura_emitida";
                 $m_facturas = "facturas_emitidas";
                 $m_titulo = "Ingresos";
@@ -44,9 +42,6 @@ class FacturasController extends Controller
                 $m_factura_html = 2;
                 break;
             case 'app/facturas/gastos':
-                $facturas = $sesionEmpresa->facturasRecibidas->filter(function ($factura) use ($fecha1, $fecha2) {
-                    return $factura->fecha >= $fecha1->format('Y-m-d') && $factura->fecha <= $fecha2->format('Y-m-d');
-                });
                 $m_id_factura = "id_factura_recibida";
                 $m_facturas = "facturas_recibidas";
                 $m_titulo = "Gastos";
@@ -59,38 +54,90 @@ class FacturasController extends Controller
                 break;
 
         }
+        $ordena = "";
+        switch ($orden) {
+
+            //Fecha
+            case '1':
+                if ($tipo == 2) {
+                    $ordena = "fecha DESC, {$m_id_factura} DESC";
+                } else {
+                    $ordena = "fecha ASC, {$m_id_factura} DESC";
+                }
+                break;
+
+            //RFC
+            case '2':
+                if ($tipo == 2) {
+                    $ordena = "rfc DESC, fecha DESC";
+                } else {
+                    $ordena = "rfc ASC, fecha DESC";
+                }
+                break;
+
+            //Razón Social
+            case '3':
+                if ($tipo == 2) {
+                    $ordena = "razon_social DESC, fecha DESC";
+                } else {
+                    $ordena = "razon_social ASC, fecha DESC";
+                }
+                break;
+
+            //Método de pago
+            case '4':
+                if ($tipo == 2) {
+                    $ordena = "metodo_real DESC, fecha DESC";
+                } else {
+                    $ordena = "metodo_real ASC, fecha DESC";
+                }
+                break;
+
+            //Tipo de factura
+            case '5':
+                if ($tipo == 2) {
+                    $ordena = "tipo_cfdi DESC, fecha DESC";
+                } else {
+                    $ordena = "tipo_cfdi ASC, fecha DESC";
+                }
+                break;
+
+            //Sub-total
+            case '6':
+                if ($tipo == 2) {
+                    $ordena = "subtotal DESC, fecha DESC";
+                } else {
+                    $ordena = "subtotal ASC, fecha DESC";
+                }
+                break;
+
+            //iva
+            case '7':
+                if ($tipo == 2) {
+                    $ordena = "importe DESC, fecha DESC";
+                } else {
+                    $ordena = "importe ASC, fecha DESC";
+                }
+                break;
+
+            //Total
+            case '8':
+                if ($tipo == 2) {
+                    $ordena = "total DESC, fecha DESC";
+                } else {
+                    $ordena = "total ASC, fecha DESC";
+                }
+                break;
+        }
+        DB::enableQueryLog();
+        $facturas = DB::table($m_facturas)->where("id_empresa", "=", $sesionEmpresa->id_empresa)->whereBetween('fecha', [$fecha1, $fecha2])->orderByRaw($ordena)->get();
+
+        //dd($facturas);
+
         $proveedores = $facturas->sortBy('razon_social')->groupBy('rfc')->transform(function ($item, $k) {
             return $item->groupBy('razon_social')->keys();
         })->toArray();
-        switch ($orden) {
-            case 1:
-                if ($tipo == 2) {
-                    $facturas = $facturas->sortByDesc('fecha')->sortByDesc($m_id_factura);
-                } else {
-                    $facturas = $facturas->sortBy('fecha')->sortBy($m_id_factura);
-                }
-                break;
-            case 2:
-                if ($tipo == 2) {
-                    $facturas = $facturas->sortByDesc('rfc')->sortByDesc('fecha');
-                } else {
-                    $facturas = $facturas->sortBy('rfc')->sortByDesc('fecha');
-                }
-                break;
-            case 3:
-                if ($tipo == 2) {
-                    $facturas = $facturas->sortByDesc('razon_social')->sortByDesc('fecha');
-                } else {
-                    $facturas = $facturas->sortBy('razon_social')->sortByDesc('fecha');
-                }
-        }
-        /*echo '<pre>';
-        foreach ($proveedores as $k => $v) {
-            echo $k. " " .$v. "\n";
-        } die();*/
-        //dd($proveedores);
-        //die($proveedores->toJson());
-        //dd(Route::current()->uri);
+
         $color_verde = "#23b176";
         $color_rojo = "#bf0606";
         $ocultar_refresh = false;
