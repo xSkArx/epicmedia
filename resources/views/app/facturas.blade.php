@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @php($uri = Route::current()->uri)
     <style>
         .noselect {
             -webkit-touch-callout: none;
@@ -210,7 +209,6 @@
                                 <thead>
                                 <tr class="uppercase">
                                     <th width="70">
-                                        @php($uri2 = Input::has('tipo') ? (Input::get('tipo')==1?"&tipo=2" : "&tipo=1"):"&tipo=1".(Input::has('proveedor') ? "&proveedor=".Input::get('proveedor'):""))
                                         <a href="/{{$uri}}?ordena=1{{$uri2}}">Fecha &nbsp;<i class="fa fa-sort"></i></a>
                                     </th>
                                     <th>
@@ -331,7 +329,8 @@
                                 <div class="p-t-px16 p-b-px16 p-l-px25 p-r-px25"
                                      style="padding-left: 26px;margin-right: 20px">
                                     <h2><strong>Suscríbete para ver todas tus facturas.</strong></h2>
-                                    <p>Tu plan ha expirado y solo puedes ver 5 facturas. <br>Por favor suscríbete a un plan
+                                    <p>Tu plan ha expirado y solo puedes ver 5 facturas. <br>Por favor suscríbete a un
+                                        plan
                                         para ver más.</p>
                                     <p>
                                         <a class="btn btn-primary green" href="?Modulo=Paquetes">Ver Planes</a>

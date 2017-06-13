@@ -19,6 +19,7 @@ class FacturasController extends Controller
 
     public function facturas()
     {
+        //dd(Input::all());
 
         $fecha1 = (Session::has('fecha1')) ? Session::get('fecha1') : Date::now()->startOfMonth();
         $fecha2 = (Session::has('fecha2')) ? Session::get('fecha2') : Date::now();
@@ -133,17 +134,22 @@ class FacturasController extends Controller
         $facturas = DB::table($m_facturas)->where("id_empresa", "=", $sesionEmpresa->id_empresa)->whereBetween('fecha', [$fecha1, $fecha2])->orderByRaw($ordena)->get();
 
         //dd($facturas);
-
         $proveedores = $facturas->sortBy('razon_social')->groupBy('rfc')->transform(function ($item, $k) {
             return $item->groupBy('razon_social')->keys();
         })->toArray();
 
+        if (Input::has('proveedor')) {
+            $facturas = $facturas->where('rfc', "=", Input::get('proveedor'));
+        }
         $color_verde = "#23b176";
         $color_rojo = "#bf0606";
         $ocultar_refresh = false;
         $color_i = $color_rojo;
         $icono_i = "fa fa-exclamation-circle";
         $texto_i = "[Usuario Expirado]";
+
+        $uri = Route::current()->uri;
+        $uri2 = Input::has('tipo') ? Input::get('tipo') == 1 ? "&tipo=2" : "&tipo=1" : "&tipo=1" . Input::has('proveedor') ? "&proveedor=" . Input::get('proveedor') : "";
 
         $html = [
             'titulo' => $m_titulo,
@@ -180,6 +186,8 @@ class FacturasController extends Controller
             ],
             'html' => $html,
             'proveedores' => $proveedores,
+            'uri' => $uri,
+            'uri2' => $uri2,
         ]);
     }
 }
